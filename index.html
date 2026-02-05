@@ -1,151 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Will you be mine, Maggie? ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap');
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: #fff5f5;
-            touch-action: manipulation;
-        }
-        .handwriting {
-            font-family: 'Dancing Script', cursive;
-        }
-        #yes-button {
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #no-button {
-            transition: all 0.3s ease;
-        }
+      @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap");
+      body {
+        font-family: "Quicksand", sans-serif;
+        background-color: #fff5f5;
+        touch-action: manipulation;
+      }
+      .handwriting {
+        font-family: "Dancing Script", cursive;
+      }
+      #yes-button {
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      #no-button {
+        transition: all 0.3s ease;
+      }
     </style>
-</head>
-<body class="flex items-center justify-center min-h-screen overflow-hidden px-4">
-    <div id="card" class="bg-white p-8 rounded-3xl shadow-2xl text-center w-full max-w-sm border-4 border-pink-200 relative z-10">
-        <div id="main-content">
-            <div class="text-6xl mb-4 animate-bounce">🧸</div>
-            <h1 class="handwriting text-4xl text-pink-600 mb-8">Will you be mine, Maggie?</h1>
-            
-            <div class="flex flex-col items-center gap-4 relative" id="button-container">
-                <button id="yes-button" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-10 rounded-full text-2xl shadow-lg active:scale-95 z-20 w-full max-w-[280px]">
-                    YES!
-                </button>
-                <button id="no-button" class="bg-gray-200 text-gray-500 font-medium py-2 px-6 rounded-full text-lg shadow-sm active:scale-90 z-10">
-                    No
-                </button>
-            </div>
-        </div>
+  </head>
+  <body
+    class="flex items-center justify-center min-h-screen overflow-hidden px-4"
+  >
+    <div
+      id="card"
+      class="bg-white p-8 rounded-3xl shadow-2xl text-center w-full max-w-sm border-4 border-pink-200 relative z-10"
+    >
+      <div id="main-content">
+        <div class="text-6xl mb-4 animate-bounce">🧸</div>
+        <h1 class="handwriting text-4xl text-pink-600 mb-8">
+          Will you be mine, Maggie?
+        </h1>
 
-        <div id="success-message" class="hidden">
-            <div class="text-6xl mb-4">💖</div>
-            <h1 class="handwriting text-5xl text-pink-600 mb-4">Yay! I knew it!</h1>
-            <p class="text-gray-600 text-xl font-bold">I love you bebu ❤️</p>
+        <div
+          class="flex flex-col items-center gap-4 relative"
+          id="button-container"
+        >
+          <button
+            id="yes-button"
+            class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-10 rounded-full text-2xl shadow-lg active:scale-95 z-20 w-full max-w-[280px]"
+          >
+            YES!
+          </button>
+          <button
+            id="no-button"
+            class="bg-gray-200 text-gray-500 font-medium py-2 px-6 rounded-full text-lg shadow-sm active:scale-90 z-10"
+          >
+            No
+          </button>
         </div>
+      </div>
+
+      <div id="success-message" class="hidden">
+        <div class="text-6xl mb-4">💖</div>
+        <h1 class="handwriting text-5xl text-pink-600 mb-4">Yay! I knew it!</h1>
+        <p class="text-gray-600 text-xl font-bold">I love you bebu ❤️</p>
+      </div>
     </div>
 
     <script>
-        const noBtn = document.getElementById('no-button');
-        const yesBtn = document.getElementById('yes-button');
-        const mainContent = document.getElementById('main-content');
-        const successMessage = document.getElementById('success-message');
-        
-        let yesScale = 1;
-        let noScale = 1;
-        let clickCount = 0;
+      const noBtn = document.getElementById("no-button");
+      const yesBtn = document.getElementById("yes-button");
+      const mainContent = document.getElementById("main-content");
+      const successMessage = document.getElementById("success-message");
 
-        const phrases = [
-            "Are you sure?",
-            "Really sure??",
-            "Think again!",
-            "Last chance!",
-            "Surely not?",
-            "You might regret this!",
-            "Give it another thought!",
-            "Are you absolutely sure?",
-            "This could be a mistake!",
-            "Have a heart!",
-            "Don't be so cold!",
-            "Change of heart?",
-            "Wouldn't you reconsider?",
-            "Is that your final answer?",
-            "You're breaking my heart ;(",
-        ];
+      let yesScale = 1;
+      let noScale = 1;
+      let clickCount = 0;
 
-        // Utility to check if user is on mobile
-        const isMobile = () => {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-        };
+      const phrases = [
+        "Are you sure?",
+        "Really sure??",
+        "Think again!",
+        "Last chance!",
+        "Surely not?",
+        "You might regret this!",
+        "Give it another thought!",
+        "Are you absolutely sure?",
+        "This could be a mistake!",
+        "Have a heart!",
+        "Don't be so cold!",
+        "Change of heart?",
+        "Wouldn't you reconsider?",
+        "Is that your final answer?",
+        "You're breaking my heart ;(",
+      ];
 
-        const moveButton = () => {
-            if (isMobile()) return; // Don't move on mobile
+      // Utility to check if user is on mobile
+      const isMobile = () => {
+        return (
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent,
+          ) || window.innerWidth < 768
+        );
+      };
 
-            const padding = 20;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
-            
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = `${randomX}px`;
-            noBtn.style.top = `${randomY}px`;
-        };
+      const moveButton = () => {
+        if (isMobile()) return; // Don't move on mobile
 
-        // Desktop: Move away on hover
-        noBtn.addEventListener('mouseover', moveButton);
+        const padding = 20;
+        const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+        const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-        // Mobile/Generic: Handle clicks
-        noBtn.addEventListener('click', () => {
-            clickCount++;
-            
-            // On desktop, if they actually manage to click it, move it anyway
-            if (!isMobile()) {
-                moveButton();
-                return;
-            }
+        const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+        const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
 
-            // Mobile logic: Grow YES / Shrink NO
-            yesScale += 0.4;
-            yesBtn.style.transform = `scale(${yesScale})`;
-            
-            noScale -= 0.1;
-            if (noScale < 0.3) noScale = 0.3;
-            noBtn.style.transform = `scale(${noScale})`;
+        noBtn.style.position = "fixed";
+        noBtn.style.left = `${randomX}px`;
+        noBtn.style.top = `${randomY}px`;
+      };
 
-            noBtn.innerText = phrases[Math.min(clickCount - 1, phrases.length - 1)];
-            
-            if (yesScale > 2) {
-                yesBtn.style.position = 'fixed';
-                yesBtn.style.inset = '0';
-                yesBtn.style.width = '100vw';
-                yesBtn.style.height = '100vh';
-                yesBtn.style.zIndex = '100';
-                yesBtn.style.borderRadius = '0';
-                yesBtn.style.display = 'flex';
-                yesBtn.style.alignItems = 'center';
-                yesBtn.style.justifyContent = 'center';
-                yesBtn.innerText = "YES YES YES!";
-            }
+      // Desktop: Move away on hover
+      noBtn.addEventListener("mouseover", moveButton);
+
+      // Mobile/Generic: Handle clicks
+      noBtn.addEventListener("click", () => {
+        clickCount++;
+
+        // On desktop, if they actually manage to click it, move it anyway
+        if (!isMobile()) {
+          moveButton();
+          return;
+        }
+
+        // Mobile logic: Grow YES / Shrink NO
+        yesScale += 0.2;
+        yesBtn.style.transform = `scale(${yesScale})`;
+
+        noScale -= 0.1;
+        if (noScale < 0.3) noScale = 0.3;
+        noBtn.style.transform = `scale(${noScale})`;
+
+        noBtn.innerText = phrases[Math.min(clickCount - 1, phrases.length - 1)];
+
+        if (yesScale > 12) {
+          yesBtn.style.position = "fixed";
+          yesBtn.style.inset = "0";
+          yesBtn.style.width = "100vw";
+          yesBtn.style.height = "100vh";
+          yesBtn.style.zIndex = "100";
+          yesBtn.style.borderRadius = "0";
+          yesBtn.style.display = "flex";
+          yesBtn.style.alignItems = "center";
+          yesBtn.style.justifyContent = "center";
+          yesBtn.innerText = "YES YES YES!";
+        }
+      });
+
+      yesBtn.addEventListener("click", () => {
+        mainContent.classList.add("hidden");
+        successMessage.classList.remove("hidden");
+        noBtn.style.display = "none";
+        yesBtn.style.display = "none";
+        document.body.style.backgroundColor = "#fff";
+
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ["#ec4899", "#f43f5e", "#fb7185"],
         });
-
-        yesBtn.addEventListener('click', () => {
-            mainContent.classList.add('hidden');
-            successMessage.classList.remove('hidden');
-            noBtn.style.display = 'none';
-            yesBtn.style.display = 'none';
-            document.body.style.backgroundColor = '#fff';
-
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ec4899', '#f43f5e', '#fb7185']
-            });
-        });
+      });
     </script>
-</body>
+  </body>
 </html>

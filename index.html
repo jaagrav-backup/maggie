@@ -30,7 +30,7 @@
             <div class="text-6xl mb-4 animate-bounce">🧸</div>
             <h1 class="handwriting text-4xl text-pink-600 mb-8">Will you be mine, Maggie?</h1>
             
-            <div class="flex flex-col items-center gap-4 relative">
+            <div class="flex flex-col items-center gap-4 relative" id="button-container">
                 <button id="yes-button" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-10 rounded-full text-2xl shadow-lg active:scale-95 z-20 w-full max-w-[280px]">
                     YES!
                 </button>
@@ -46,9 +46,6 @@
             <p class="text-gray-600 text-xl font-bold">I love you bebu ❤️</p>
         </div>
     </div>
-
-    <!-- Floating hearts background -->
-    <div class="fixed inset-0 pointer-events-none opacity-20" id="bg-hearts"></div>
 
     <script>
         const noBtn = document.getElementById('no-button');
@@ -78,22 +75,49 @@
             "You're breaking my heart ;(",
         ];
 
+        // Utility to check if user is on mobile
+        const isMobile = () => {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+        };
+
+        const moveButton = () => {
+            if (isMobile()) return; // Don't move on mobile
+
+            const padding = 20;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+        };
+
+        // Desktop: Move away on hover
+        noBtn.addEventListener('mouseover', moveButton);
+
+        // Mobile/Generic: Handle clicks
         noBtn.addEventListener('click', () => {
             clickCount++;
             
-            // Make YES button grow
+            // On desktop, if they actually manage to click it, move it anyway
+            if (!isMobile()) {
+                moveButton();
+                return;
+            }
+
+            // Mobile logic: Grow YES / Shrink NO
             yesScale += 0.4;
             yesBtn.style.transform = `scale(${yesScale})`;
             
-            // Make NO button shrink
             noScale -= 0.1;
-            if (noScale < 0.3) noScale = 0.3; // Don't let it disappear completely, just be tiny
+            if (noScale < 0.3) noScale = 0.3;
             noBtn.style.transform = `scale(${noScale})`;
 
-            // Change the text of the NO button
             noBtn.innerText = phrases[Math.min(clickCount - 1, phrases.length - 1)];
             
-            // Move YES button to the top of the stack as it gets huge
             if (yesScale > 2) {
                 yesBtn.style.position = 'fixed';
                 yesBtn.style.inset = '0';
@@ -113,8 +137,6 @@
             successMessage.classList.remove('hidden');
             noBtn.style.display = 'none';
             yesBtn.style.display = 'none';
-            
-            // Reset fixed styles if she clicked the giant button
             document.body.style.backgroundColor = '#fff';
 
             confetti({
